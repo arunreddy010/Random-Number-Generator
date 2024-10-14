@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            margin: 10px;
+            padding: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Number Generator</h1>
+    <form id="number-form">
+        <input type="number" id="min" placeholder="Enter Minimum Value" required>
+        <input type="number" id="max" placeholder="Enter Maximum Value" required>
+        <button type="button" onclick="generateNumber()">Generate</button>
+    </form>
+    <h2>Generated Number: <span id="result">--</span></h2>
+    <script>
+        function generateNumber() {
+            let min = parseInt(document.getElementById("min").value);
+            let max = parseInt(document.getElementById("max").value);
+
+            if (min >= max) {
+                alert("Minimum value must be less than maximum value!");
+                return;
+            }
+
+            fetch(`/generate/?min=${min}&max=${max}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerText = data.number;
+                });
+        }
+    </script>
+</body>
+</html>
+
